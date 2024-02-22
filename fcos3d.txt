@@ -1,0 +1,11 @@
+ATE：平均平移误差，二维的欧式中心距离；
+ASE：平均刻度误差，1−IoU(3Dbox的IoU)；
+AOE：平均朝向误差，预测和标记之间的最小偏航角差(弧度)；
+AVE：平均速度误差，维绝对速度误差的L2-Norm (m/s)；
+AAE：平均属性误差，1−acc(acc为属性分类精度)。
+NDS是结合了前面6个指标的综合指标。
+
+https://blog.csdn.net/i6101206007/article/details/132133046?ops_request_misc=&request_id=&biz_id=102&utm_term=fcos3d%E4%BB%A3%E7%A0%81&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-8-132133046.142^v99^pc_search_result_base7&spm=1018.2226.3001.4187
+
+△x和△y是3D边框2D投影的中心点在平面图上和当前负责预测的像素点的偏移量，d是对深度的预测，WHL是3D框的边长，θ是角度，这里用Cθ去判断车子的行驶方向，能提高对方向角的预测准确度。
+FCOS3D与FCOS的联系非常紧密。首先，FCOS3D虽然最终目标是预测3D检测框，但在做标签分配的时候，依然是使用2D检测框来将尺度差异大的目标分配给FPN不同级别的特征层，这里的2D框使用的是3D框2D投影的外接矩形。但是对于尺度差异小的目标，FCOS3D算法根据3D中心距离来分配，离当前像素点最近的3D中心点代表的那个3D框，交给这个像素点去做预测
